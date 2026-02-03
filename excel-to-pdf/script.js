@@ -84,6 +84,11 @@ const gridlinesToggle = document.getElementById("gridlines-toggle");
 const pageNumbersToggle = document.getElementById("page-numbers");
 const dateStampToggle = document.getElementById("date-stamp");
 const previewContent = document.getElementById("preview-content");
+const signModal = document.getElementById("sign-modal");
+const signCanvas = document.getElementById("sign-canvas");
+const closeSignBtn = document.getElementById("close-sign");
+const clearSignBtn = document.getElementById("clear-sign");
+const saveSignBtn = document.getElementById("save-sign");
 
 // Stores uploaded Excel files
 let fileQueue = [];
@@ -146,13 +151,11 @@ function updateQueueUI() {
     if (fileQueue.length === 0) {
         fileQueueEl.classList.add("hidden");
         clearQueueBtn.classList.add("hidden");
-        setCorporateToolsEnabled(false);
         return;
     }
 
     fileQueueEl.classList.remove("hidden");
     clearQueueBtn.classList.remove("hidden");
-    setCorporateToolsEnabled(true);
 
     fileQueue.forEach((file, index) => {
         const div = document.createElement("div");
@@ -220,58 +223,340 @@ clearQueueBtn && clearQueueBtn.addEventListener("click", () => {
 /* ================= END DATA QUEUE LOGIC ================= */
 
 /* ================= CORPORATE TOOLS LOGIC ================= */
-function setCorporateToolsEnabled(enabled) {
-    if (signBtn) signBtn.disabled = !enabled;
-}
 
 function updateGridlinesPreview() {
+
     if (!previewContent || !gridlinesToggle) return;
+
     previewContent.classList.toggle("hide-gridlines", !gridlinesToggle.checked);
+
 }
+
+
 
 function updateFooterPreview() {
+
     if (!previewContent) return;
+
     const existing = previewContent.querySelector("[data-preview-footer]");
+
     if (existing) existing.remove();
+
     if ((!pageNumbersToggle?.checked && !dateStampToggle?.checked)) return;
+
     if (previewContent.innerHTML.trim() === "") return;
 
+
+
     const footer = document.createElement("div");
+
     footer.className = "preview-footer";
+
     footer.setAttribute("data-preview-footer", "true");
+
     const left = dateStampToggle?.checked ? `Generated: ${new Date().toLocaleDateString()}` : "";
+
     const right = pageNumbersToggle?.checked ? "Page 1/1" : "";
+
     footer.innerHTML = `<span>${left}</span><span>${right}</span>`;
+
     previewContent.appendChild(footer);
+
 }
+
+
 
 if (logoInput) {
+
     logoInput.addEventListener("change", (e) => {
+
         const file = e.target.files[0];
+
         if (!file) return;
 
+
+
         const reader = new FileReader();
+
         reader.onload = (event) => {
+
             if (!previewContent) return;
+
             const img = document.createElement("img");
+
             img.src = event.target.result;
+
             img.style.maxHeight = "60px";
+
             img.style.marginBottom = "20px";
+
             img.style.display = "block";
+
             previewContent.insertBefore(img, previewContent.firstChild);
+
         };
 
+
+
         reader.readAsDataURL(file);
+
     });
+
 }
 
+
+
 gridlinesToggle && gridlinesToggle.addEventListener("change", updateGridlinesPreview);
+
 pageNumbersToggle && pageNumbersToggle.addEventListener("change", updateFooterPreview);
+
 dateStampToggle && dateStampToggle.addEventListener("change", updateFooterPreview);
 
+
+
 updateGridlinesPreview();
+
 updateFooterPreview();
 
+
+
 /* ================= END CORPORATE TOOLS LOGIC ================= */
+
+
+
+/* ================= SIGNATURE MODAL LOGIC ================= */
+
+if (signBtn) {
+
+    signBtn.addEventListener("click", () => {
+
+        signModal.classList.remove("hidden");
+
+    });
+
+}
+
+
+
+if (closeSignBtn) {
+
+    closeSignBtn.addEventListener("click", () => {
+
+        signModal.classList.add("hidden");
+
+    });
+
+}
+
+
+
+if (signModal) {
+
+    signModal.addEventListener("click", (e) => {
+
+        if (e.target === signModal) {
+
+            signModal.classList.add("hidden");
+
+        }
+
+    });
+
+}
+
+
+
+if (signCanvas) {
+
+    const ctx = signCanvas.getContext("2d");
+
+    let drawing = false;
+
+
+
+    const getEventPos = (e) => {
+
+        const rect = signCanvas.getBoundingClientRect();
+
+        const touches = e.touches || e.changedTouches;
+
+        const clientX = touches && touches.length > 0 ? touches[0].clientX : e.clientX;
+
+        const clientY = touches && touches.length > 0 ? touches[0].clientY : e.clientY;
+
+
+
+        if (clientX === undefined || clientY === undefined) {
+
+            return null;
+
+        }
+
+        return {
+
+            x: clientX - rect.left,
+
+            y: clientY - rect.top
+
+        };
+
+    }
+
+
+
+    const startDrawing = (e) => {
+
+        e.preventDefault();
+
+        const pos = getEventPos(e);
+
+        if (!pos) return;
+
+        drawing = true;
+
+        ctx.beginPath();
+
+        ctx.moveTo(pos.x, pos.y);
+
+    };
+
+
+
+    const stopDrawing = (e) => {
+
+        if (drawing) {
+
+            e.preventDefault();
+
+            drawing = false;
+
+        }
+
+    };
+
+
+
+    const draw = (e) => {
+
+        if (!drawing) return;
+
+        e.preventDefault();
+
+        const pos = getEventPos(e);
+
+        if (!pos) return;
+
+
+
+        ctx.lineWidth = 2;
+
+        ctx.lineCap = "round";
+
+        ctx.strokeStyle = "black";
+
+
+
+        ctx.lineTo(pos.x, pos.y);
+
+        ctx.stroke();
+
+    };
+
+
+
+    // Mouse events
+
+    signCanvas.addEventListener("mousedown", startDrawing);
+
+    signCanvas.addEventListener("mouseup", stopDrawing);
+
+    signCanvas.addEventListener("mouseleave", stopDrawing);
+
+    signCanvas.addEventListener("mousemove", draw);
+
+
+
+    // Touch events
+
+    signCanvas.addEventListener("touchstart", startDrawing, {
+
+        passive: false
+
+    });
+
+    signCanvas.addEventListener("touchend", stopDrawing, {
+
+        passive: false
+
+    });
+
+    signCanvas.addEventListener("touchmove", draw, {
+
+        passive: false
+
+    });
+
+
+
+
+
+    if (clearSignBtn) {
+
+        clearSignBtn.addEventListener("click", () => {
+
+            ctx.clearRect(0, 0, signCanvas.width, signCanvas.height);
+
+        });
+
+    }
+
+
+
+    if (saveSignBtn) {
+
+        saveSignBtn.addEventListener("click", () => {
+
+            const dataUrl = signCanvas.toDataURL();
+
+
+
+            const img = document.createElement("img");
+
+            img.src = dataUrl;
+
+            img.style.maxHeight = "40px";
+
+            img.style.position = "absolute";
+
+            img.style.bottom = "50px";
+
+            img.style.right = "50px";
+
+            img.classList.add("signature-image");
+
+
+
+            if (previewContent) {
+
+                previewContent.style.position = "relative";
+
+                previewContent.appendChild(img);
+
+            }
+
+
+
+            console.log("Signature inserted.");
+
+            signModal.classList.add("hidden");
+
+            ctx.clearRect(0, 0, signCanvas.width, signCanvas.height);
+
+        });
+
+    }
+
+}
+
 
 
