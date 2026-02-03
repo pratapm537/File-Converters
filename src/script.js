@@ -119,3 +119,22 @@ toolCards.forEach(card => {
         }, 150);
     });
 });
+
+ document.addEventListener("DOMContentLoaded", () => {
+        const footer = document.querySelector(".footer");
+        if (footer) {
+            console.log("Footer section loaded 📄");
+        }
+    });
+    document.addEventListener("DOMContentLoaded", () => {
+        const trustSection = document.querySelector(".trust-section");
+        if (trustSection) {
+            console.log("Trust section loaded 🔐");
+        }
+    });
+ document.addEventListener("DOMContentLoaded", () => {
+        const footer = document.querySelector(".footer");
+        if (footer) {
+            console.log("Footer section loaded 📄");
+        }
+    });

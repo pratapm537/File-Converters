@@ -157,3 +157,26 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
     }
 }
 
+.trust-section {
+    transition: all 0.3s ease;
+}
+
+.trust-section > div {
+    transition: transform 0.2s ease;
+}
+
+.trust-section > div:hover {
+    transform: translateY(-2px);
+}
+
+.footer {
+    transition: background-color 0.3s ease;
+}
+
+.footer-link {
+    transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
