@@ -56,7 +56,7 @@ megaMenu && megaMenu.addEventListener('click', (e) => {
     const searchBtn = document.getElementById("searchBtn");
     searchBtn.addEventListener("click", () => {
         console.log("Search clicked");
-        alert("Search feature coming soon 🚀");
+        alert("Search feature coming soon ");
     });
 
     // Free trial CTA click
@@ -70,10 +70,52 @@ megaMenu && megaMenu.addEventListener('click', (e) => {
     });
 
 
+
+    
     // Example: log when hero is visible
     document.addEventListener("DOMContentLoaded", () => {
         const hero = document.querySelector(".hero-section");
         if (hero) {
-            console.log("Hero section loaded 🚀");
+            console.log("Hero section loaded");
         }
     });
+
+    
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const toolCards = document.querySelectorAll(".tool-card");
+
+    filterButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            // Remove active class from all buttons
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+            // Add active class to clicked button
+            button.classList.add("active");
+
+            // Get filter value
+            const filterValue = button.getAttribute("data-filter");
+            console.log("Selected Filter:", filterValue);
+
+            // Show/hide cards by category
+            toolCards.forEach((card) => {
+                const category = card.getAttribute("data-category");
+                const shouldShow = filterValue === "all" || category === filterValue;
+                card.classList.toggle("hidden", !shouldShow);
+            });
+        });
+    });
+
+// Optional click feedback
+toolCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const toolName = card.querySelector('h3').innerText;
+        console.log(`Navigating to ${toolName}...`);
+
+        card.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+            card.style.transform = '';
+        }, 150);
+    });
+});
