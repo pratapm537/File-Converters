@@ -68,3 +68,12 @@ megaMenu && megaMenu.addEventListener('click', (e) => {
             trialBtn.innerText = "Start Free Trial";
         }, 1000);
     });
+
+
+    // Example: log when hero is visible
+    document.addEventListener("DOMContentLoaded", () => {
+        const hero = document.querySelector(".hero-section");
+        if (hero) {
+            console.log("Hero section loaded 🚀");
+        }
+    });
