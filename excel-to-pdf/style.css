@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+
+.bg-dot-grid {
+    background-color: #f8fafc;
+    background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* Mega menu base + transitions */
+.mega-menu-container {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: 100vw;
+  max-width: 1100px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+  padding-top: 10px; /* gap */
+  pointer-events: none;
+}
+
+/* Visible state for accessibility when toggled by JS */
+.mega-menu-container.open,
+.nav-item-trigger:hover .mega-menu-container {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* Nav link underline on hover */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #f97316; /* brand-500 */
+  transition: width 0.28s;
+}
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* menu item hover state */
+.menu-link-item:hover {
+  background-color: #fff7ed; /* brand-50 */
+  color: #ea580c; /* brand-600/700 */
+}
+
+/* small visual tweak for shadow used in component */
+.shadow-menu {
+  box-shadow: 0 20px 40px -5px rgba(0,0,0,0.10), 0 10px 20px -5px rgba(0,0,0,0.04);
+}
+
+/* ensure the mega menu doesn't overflow on very small screens */
+@media (max-width: 1024px) {
+  .mega-menu-container {
+    left: 6%;
+    transform: translateX(0) translateY(10px);
+    width: 88vw;
+    max-width: 920px;
+  }
+}
+
+
+/* Right Actions hover polish */
+.right-actions button,
+.right-actions a {
+    transition: all 0.2s ease;
+}
+
+/* Extra tap feedback */
+.right-actions button:active {
+    transform: scale(0.96);
+}
+
+/* ===== Data Queue Drag Active State ===== */
+/* Applied when user drags files over the drop zone */
+.drag-active {
+    border-color: #ea580c !important;       /* Brand orange */
+    background-color: #fff7ed !important;   /* Brand light background */
+}
+
+/* ===== File Item Base ===== */
+/* Each uploaded file row */
+.file-item {
+    transition: all 0.2s ease;
+}
+
+/* ===== Active File ===== */
+/* Currently selected Excel file */
+.file-item.active {
+    border-color: #ea580c;
+    background-color: #fff7ed;
+}
+
+/* ===== Hover State ===== */
+/* Non-active file hover effect */
+.file-item:hover:not(.active) {
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+}
