@@ -78,6 +78,12 @@ const dropArea = dropZone ? dropZone.querySelector(".drop-area") : null;
 const fileInput = document.getElementById("file-input");
 const fileQueueEl = document.getElementById("file-queue");
 const clearQueueBtn = document.getElementById("clear-queue");
+const signBtn = document.getElementById("btn-signature");
+const logoInput = document.getElementById("logo-input");
+const gridlinesToggle = document.getElementById("gridlines-toggle");
+const pageNumbersToggle = document.getElementById("page-numbers");
+const dateStampToggle = document.getElementById("date-stamp");
+const previewContent = document.getElementById("preview-content");
 
 // Stores uploaded Excel files
 let fileQueue = [];
@@ -140,11 +146,13 @@ function updateQueueUI() {
     if (fileQueue.length === 0) {
         fileQueueEl.classList.add("hidden");
         clearQueueBtn.classList.add("hidden");
+        setCorporateToolsEnabled(false);
         return;
     }
 
     fileQueueEl.classList.remove("hidden");
     clearQueueBtn.classList.remove("hidden");
+    setCorporateToolsEnabled(true);
 
     fileQueue.forEach((file, index) => {
         const div = document.createElement("div");
@@ -203,11 +211,67 @@ window.removeFile = function (index) {
 };
 
 /* ---------- Clear all files ---------- */
-clearQueueBtn.addEventListener("click", () => {
+clearQueueBtn && clearQueueBtn.addEventListener("click", () => {
     fileQueue = [];
     activeFileIndex = -1;
     updateQueueUI();
 });
 
 /* ================= END DATA QUEUE LOGIC ================= */
+
+/* ================= CORPORATE TOOLS LOGIC ================= */
+function setCorporateToolsEnabled(enabled) {
+    if (signBtn) signBtn.disabled = !enabled;
+}
+
+function updateGridlinesPreview() {
+    if (!previewContent || !gridlinesToggle) return;
+    previewContent.classList.toggle("hide-gridlines", !gridlinesToggle.checked);
+}
+
+function updateFooterPreview() {
+    if (!previewContent) return;
+    const existing = previewContent.querySelector("[data-preview-footer]");
+    if (existing) existing.remove();
+    if ((!pageNumbersToggle?.checked && !dateStampToggle?.checked)) return;
+    if (previewContent.innerHTML.trim() === "") return;
+
+    const footer = document.createElement("div");
+    footer.className = "preview-footer";
+    footer.setAttribute("data-preview-footer", "true");
+    const left = dateStampToggle?.checked ? `Generated: ${new Date().toLocaleDateString()}` : "";
+    const right = pageNumbersToggle?.checked ? "Page 1/1" : "";
+    footer.innerHTML = `<span>${left}</span><span>${right}</span>`;
+    previewContent.appendChild(footer);
+}
+
+if (logoInput) {
+    logoInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            if (!previewContent) return;
+            const img = document.createElement("img");
+            img.src = event.target.result;
+            img.style.maxHeight = "60px";
+            img.style.marginBottom = "20px";
+            img.style.display = "block";
+            previewContent.insertBefore(img, previewContent.firstChild);
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
+
+gridlinesToggle && gridlinesToggle.addEventListener("change", updateGridlinesPreview);
+pageNumbersToggle && pageNumbersToggle.addEventListener("change", updateFooterPreview);
+dateStampToggle && dateStampToggle.addEventListener("change", updateFooterPreview);
+
+updateGridlinesPreview();
+updateFooterPreview();
+
+/* ================= END CORPORATE TOOLS LOGIC ================= */
+
 

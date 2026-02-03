@@ -58,6 +58,10 @@
     </script>
         <!-- Icons -->
         <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
         <link rel="stylesheet" href="style.css">
     </head>
     <body
@@ -303,73 +307,142 @@
         <div class="flex-grow flex overflow-hidden">
             <aside
                 class="w-[340px] flex-shrink-0 bg-white border-r border-slate-200 flex flex-col z-20">
-                <div class="flex-grow overflow-y-auto p-6">
+                <div class="flex-grow overflow-y-auto p-6 space-y-8">
                     <!-- ================= DATA QUEUE SECTION ================= -->
                     <section class="data-queue-section">
 
-                    <!-- Header: Title + Clear All button -->
-                    <div class="flex items-center justify-between mb-3">
-                        <!-- Section title -->
-                        <h3
-                            class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
-                            Data Queue
-                        </h3>
+                        <!-- Header: Title + Clear All button -->
+                        <div class="flex items-center justify-between mb-3">
+                            <!-- Section title -->
+                            <h3
+                                class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                                Data Queue
+                            </h3>
 
-                        <!-- Clear all uploaded files -->
-                        <button id="clear-queue"
-                            class="hidden text-[10px] font-medium text-red-500 hover:text-red-700
+                            <!-- Clear all uploaded files -->
+                            <button id="clear-queue"
+                                class="hidden text-[10px] font-medium text-red-500 hover:text-red-700
                    uppercase tracking-wider transition-colors">
-                            Clear All
-                        </button>
-                    </div>
+                                Clear All
+                            </button>
+                        </div>
 
-                    <!-- Drag & Drop Upload Zone -->
-                    <div id="drop-zone" class="group relative">
+                        <!-- Drag & Drop Upload Zone -->
+                        <div id="drop-zone" class="group relative">
 
-                        <!-- Hidden file input (triggered via click or drop) -->
-                        <input
-                            type="file"
-                            id="file-input"
-                            accept=".xlsx, .xls"
-                            multiple
-                            class="hidden">
+                            <!-- Hidden file input (triggered via click or drop) -->
+                            <input
+                                type="file"
+                                id="file-input"
+                                accept=".xlsx, .xls"
+                                multiple
+                                class="hidden">
 
-                        <!-- Visible drop area -->
-                        <div
-                            class="drop-area border border-dashed border-slate-300 rounded-lg p-6 text-center
+                            <!-- Visible drop area -->
+                            <div
+                                class="drop-area border border-dashed border-slate-300 rounded-lg p-6 text-center
                     transition-all duration-200 hover:border-brand-500 hover:bg-brand-50
                     cursor-pointer">
 
-                            <!-- Upload icon -->
-                            <div
-                                class="w-10 h-10 bg-brand-50 rounded-full flex items-center
+                                <!-- Upload icon -->
+                                <div
+                                    class="w-10 h-10 bg-brand-50 rounded-full flex items-center
                         justify-center mx-auto mb-3 text-brand-600
                         group-hover:scale-110 transition-transform">
-                                <i data-lucide="files" class="w-5 h-5"></i>
+                                    <i data-lucide="files" class="w-5 h-5"></i>
+                                </div>
+
+                                <!-- Primary text -->
+                                <p class="text-xs font-medium text-slate-700">
+                                    Upload Excel Files
+                                </p>
+
+                                <!-- Helper text -->
+                                <p class="text-[9px] text-slate-400 mt-1">
+                                    Batch Processing Supported
+                                </p>
                             </div>
-
-                            <!-- Primary text -->
-                            <p class="text-xs font-medium text-slate-700">
-                                Upload Excel Files
-                            </p>
-
-                            <!-- Helper text -->
-                            <p class="text-[9px] text-slate-400 mt-1">
-                                Batch Processing Supported
-                            </p>
                         </div>
-                    </div>
 
-                    <!-- Uploaded Files List -->
-                    <div id="file-queue" class="hidden mt-4 space-y-2">
-                        <!-- File items will be injected here dynamically -->
-                    </div>
+                        <!-- Uploaded Files List -->
+                        <div id="file-queue" class="hidden mt-4 space-y-2">
+                            <!-- File items will be injected here dynamically -->
+                        </div>
 
                     </section>
                     <!-- ================= END DATA QUEUE ================= -->
+
+                    <!-- ================= CORPORATE TOOLS SECTION ================= -->
+                    <section class="corporate-tools space-y-4">
+                        <h3
+                            class="text-[11px] font-bold text-brand-500 uppercase tracking-widest border-t border-slate-100 pt-5 flex items-center gap-2">
+                            <i data-lucide="award" class="w-3 h-3"></i>
+                            Corporate Tools
+                        </h3>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="btn-signature" disabled
+                                class="group flex items-center justify-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg transition-all hover:border-brand-500 hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:border-slate-200 disabled:hover:bg-slate-50">
+                                <span
+                                    class="flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 transition-colors group-hover:border-brand-200 group-hover:text-brand-600">
+                                    <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i>
+                                </span>
+                                <span class="text-[11px] font-semibold text-slate-700">Sign</span>
+                            </button>
+
+                            <label id="logo-trigger"
+                                class="group flex items-center justify-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg transition-all hover:border-brand-500 hover:bg-white cursor-pointer">
+                                <span
+                                    class="flex h-8 w-8 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 transition-colors group-hover:border-brand-200 group-hover:text-brand-600">
+                                    <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                                </span>
+                                <span class="text-[11px] font-semibold text-slate-700">Logo</span>
+                                <input type="file" id="logo-input" accept="image/*"
+                                    class="hidden">
+                            </label>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label
+                                class="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 transition hover:border-brand-200 hover:bg-white">
+                                <span class="text-[11px] font-medium text-slate-700">Show Gridlines</span>
+                                <span class="relative inline-flex h-5 w-9 items-center">
+                                    <input type="checkbox" id="gridlines-toggle" checked class="peer sr-only">
+                                    <span
+                                        class="absolute inset-0 rounded-full bg-slate-200 transition peer-checked:bg-brand-500"></span>
+                                    <span
+                                        class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
+                                </span>
+                            </label>
+                            <label
+                                class="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 transition hover:border-brand-200 hover:bg-white">
+                                <span class="text-[11px] font-medium text-slate-700">Page Numbers</span>
+                                <span class="relative inline-flex h-5 w-9 items-center">
+                                    <input type="checkbox" id="page-numbers" class="peer sr-only">
+                                    <span
+                                        class="absolute inset-0 rounded-full bg-slate-200 transition peer-checked:bg-brand-500"></span>
+                                    <span
+                                        class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
+                                </span>
+                            </label>
+                            <label
+                                class="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 transition hover:border-brand-200 hover:bg-white">
+                                <span class="text-[11px] font-medium text-slate-700">Date Stamp (Footer)</span>
+                                <span class="relative inline-flex h-5 w-9 items-center">
+                                    <input type="checkbox" id="date-stamp" class="peer sr-only">
+                                    <span
+                                        class="absolute inset-0 rounded-full bg-slate-200 transition peer-checked:bg-brand-500"></span>
+                                    <span
+                                        class="absolute left-0.5 top-0.5 h-4 w-4 rounded-full bg-white shadow transition peer-checked:translate-x-4"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </section>
+                    <!-- ================= END CORPORATE TOOLS ================= -->
                 </div>
 
             </aside>
+
         </div>
 
         <script src="script.js"></script>

@@ -110,3 +110,46 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
     border-color: #cbd5e1;
     background-color: #f8fafc;
 }
+
+/* Preview footer for page number/date stamp toggles */
+.preview-footer {
+    margin-top: 14px;
+    padding-top: 6px;
+    border-top: 1px dashed #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 9px;
+    color: #94a3b8;
+}
+
+/* Gridlines toggle support (applies to preview tables) */
+.hide-gridlines table,
+.hide-gridlines th,
+.hide-gridlines td {
+    border: none !important;
+}
+.hide-gridlines th {
+    border-bottom: 2px solid #ea580c !important;
+}
+
+/* ===== Corporate Tools Buttons ===== */
+/* Smooth hover animation for tool cards */
+.corporate-tools button,
+.corporate-tools label {
+    transition: all 0.2s ease;
+}
+
+/* ===== Disabled State ===== */
+/* Used for Sign button before file upload */
+.corporate-tools button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* ===== Toggle Containers ===== */
+/* Uniform styling for feature toggles */
+.corporate-tools .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
