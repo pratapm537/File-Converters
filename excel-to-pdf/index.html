@@ -324,6 +324,84 @@
                     <div id="file-queue" class="hidden mt-4 space-y-2">
                         </div>
                 </section>
+
+                <section class="space-y-4">
+                    <h3 class="text-[11px] font-bold text-brand-500 uppercase tracking-widest border-t border-slate-100 pt-5 flex items-center gap-2">
+                        <i data-lucide="award" class="w-3 h-3"></i> Corporate Tools
+                    </h3>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <button id="btn-signature" class="flex items-center justify-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg hover:border-brand-500 hover:bg-white transition-all disabled:opacity-50">
+                            <i data-lucide="pen-tool" class="w-3.5 h-3.5 text-slate-500"></i> <span class="text-[11px] font-medium">Sign</span>
+                        </button>
+                        <label class="flex items-center justify-center gap-2 p-2.5 bg-slate-50 border border-slate-200 rounded-lg hover:border-brand-500 hover:bg-white transition-all cursor-pointer">
+                            <i data-lucide="image" class="w-3.5 h-3.5 text-slate-500"></i> <span class="text-[11px] font-medium">Logo</span>
+                            <input type="file" id="logo-input" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-md border border-slate-200">
+                            <span class="text-[11px] font-medium text-slate-700">Show Gridlines</span>
+                            <input type="checkbox" id="gridlines-toggle" checked class="accent-brand-600 h-3.5 w-3.5 cursor-pointer">
+                        </div>
+                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-md border border-slate-200">
+                            <span class="text-[11px] font-medium text-slate-700">Page Numbers</span>
+                            <input type="checkbox" id="page-numbers" class="accent-brand-600 h-3.5 w-3.5 cursor-pointer">
+                        </div>
+                        <div class="flex items-center justify-between bg-slate-50 p-2 rounded-md border border-slate-200">
+                            <span class="text-[11px] font-medium text-slate-700">Date Stamp (Footer)</span>
+                            <input type="checkbox" id="date-stamp" class="accent-brand-600 h-3.5 w-3.5 cursor-pointer">
+                        </div>
+                    </div>
+                </section>
+
+                 <section class="space-y-5">
+                    <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-widest border-t border-slate-100 pt-5">Export Config</h3>
+
+                    <div class="flex bg-slate-50 p-1 rounded-lg border border-slate-200">
+                        <button id="orient-portrait" class="orient-btn active flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-[11px] font-medium"><i data-lucide="file" class="w-3 h-3"></i> Portrait</button>
+                        <button id="orient-landscape" class="orient-btn inactive flex-1 flex items-center justify-center gap-2 py-1.5 rounded text-[11px] font-medium"><i data-lucide="file-minus" class="w-3 h-3"></i> Landscape</button>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[11px] font-semibold text-slate-500 uppercase tracking-wide">Quality Engine</label>
+                        <div class="relative">
+                            <select id="render-quality" class="w-full text-xs font-medium bg-slate-50 border border-slate-200 text-slate-700 rounded-md py-2.5 pl-3 pr-8 focus:ring-1 focus:ring-brand-500 focus:border-brand-500 outline-none appearance-none cursor-pointer">
+                                <option value="1">Draft (1x - Fastest)</option>
+                                <option value="2">Standard (2x - Web Ready)</option>
+                                <option value="4" selected>High (4x - Clean Print)</option>
+                                <option value="6">Ultra (6x - Studio)</option>
+                                <option value="9">Extreme (9x - Max Detail)</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 absolute right-3 top-3 pointer-events-none"></i>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-semibold text-slate-500 uppercase">Size</label>
+                            <select id="page-size" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-md py-2 px-2 outline-none"><option value="a4">A4</option><option value="letter">Letter</option></select>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="text-[10px] font-semibold text-slate-500 uppercase">Margins</label>
+                            <select id="page-margin" class="w-full text-xs bg-slate-50 border border-slate-200 rounded-md py-2 px-2 outline-none"><option value="normal">Normal</option><option value="compact">Compact</option><option value="wide">Wide</option></select>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-semibold text-slate-500 uppercase">Watermark</label>
+                        <div class="relative group">
+                            <input type="text" id="watermark-input" placeholder="Custom text..." class="w-full text-xs bg-slate-50 border border-slate-200 rounded-md py-2 pl-8 pr-3 focus:border-brand-500 outline-none">
+                            <i data-lucide="stamp" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-2.5"></i>
+                        </div>
+                        <div class="flex gap-1.5 flex-wrap">
+                            <button class="stamp-btn text-[9px] px-2 py-1 border border-slate-200 rounded bg-white text-slate-500 transition-colors" onclick="setStamp('CONFIDENTIAL')">CONFIDENTIAL</button>
+                            <button class="stamp-btn text-[9px] px-2 py-1 border border-slate-200 rounded bg-white text-slate-500 transition-colors" onclick="setStamp('APPROVED')">APPROVED</button>
+                            <button class="stamp-btn text-[9px] px-2 py-1 border border-slate-200 rounded bg-white text-slate-500 transition-colors" onclick="setStamp('DRAFT')">DRAFT</button>
+                        </div>
+                    </div>
+                </section>
                 </div>
                 <!-- watermark -->
             </aside>
