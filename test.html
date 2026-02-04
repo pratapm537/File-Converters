@@ -88,7 +88,7 @@
                     class="hidden md:flex items-center gap-6 h-full md:absolute md:inset-y-0 md:left-1/2 md:-translate-x-1/2">
 
                     <div class="nav-item-trigger h-full flex items-center">
-                        <button
+                        <button id="all-tools-btn" aria-expanded="false"
                             class="flex items-center gap-2 text-sm font-semibold text-slate-700 bg-slate-50 border border-slate-200 hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 px-4 py-2.5 rounded-full transition-all group">
                             <i data-lucide="grid"
                                 class="w-4 h-4 text-slate-400 group-hover:text-brand-500 transition-colors"></i>
@@ -97,7 +97,7 @@
                                 class="w-3.5 h-3.5 opacity-50 group-hover:rotate-180 transition-transform duration-300"></i>
                         </button>
 
-                        <div class="mega-menu-container">
+                        <div id="mega-menu" class="mega-menu-container" aria-hidden="true">
                             <div
                                 class="bg-white border border-slate-100 rounded-2xl shadow-menu overflow-hidden flex text-left">
 
@@ -113,22 +113,22 @@
                                         </div>
                                         <ul class="space-y-1">
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="file-spreadsheet"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Excel to PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="file-text"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Word to PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="presentation"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     PPT to PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="image"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Image to PDF</a></li>
@@ -144,22 +144,22 @@
                                         </div>
                                         <ul class="space-y-1">
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="files"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Merge PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="scissors"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Split PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="arrow-left-right"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Organize</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="scan"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Scan to PDF</a></li>
@@ -175,22 +175,22 @@
                                         </div>
                                         <ul class="space-y-1">
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="pen-line"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Edit Text</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="stamp"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Watermark</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="hash"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Page Numbers</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="rotate-cw"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Rotate PDF</a></li>
@@ -206,22 +206,22 @@
                                         </div>
                                         <ul class="space-y-1">
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="signature"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Sign PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="lock"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Protect PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="unlock"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Unlock PDF</a></li>
                                             <li><a href="#"
-                                                    class="menu-link-item block text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
+                                                    class="menu-link-item w-full text-sm font-medium text-slate-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-2"><i
                                                         data-lucide="eraser"
                                                         class="w-4 h-4 opacity-50"></i>
                                                     Redact PDF</a></li>
