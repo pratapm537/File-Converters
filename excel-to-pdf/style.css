@@ -83,3 +83,4 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
 .right-actions button:active {
     transform: scale(0.96);
 }
+
